@@ -45,11 +45,12 @@ export default class Game extends Component {
         return (
             <div className="game">
                 <div className="game-board">
+                    <div className="heading">~ Tic-Tac-Toe ~</div>
                     <Board onClick={(i) => {this.handleClick(i)}}
                         squares={current.squares}
                     />
+                    <div className="winner">{winner}</div>
                 </div>  
-                <div></div>  
             </div>
         )
     }
@@ -69,7 +70,7 @@ function Winner(squares){
     for (let i = 0; i < lines.length; i++) {
         const [a,b,c] = lines[i];
         if( squares[a] && squares[a] === squares[b] && squares[b] === squares[c])
-            return squares[a];
+            return `${squares[a]} wins`;
     }
     return null;
 }
