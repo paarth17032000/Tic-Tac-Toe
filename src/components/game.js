@@ -71,8 +71,6 @@ function Winner(squares){
         const [a,b,c] = lines[i];
         if( squares[a] && squares[a] === squares[b] && squares[b] === squares[c])
             return `${squares[a]} wins`;
-        else
-            return `Draw`;
     }
     return null;
 }
