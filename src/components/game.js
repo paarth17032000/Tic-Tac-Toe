@@ -2,46 +2,48 @@ import React, { Component } from 'react'
 import Board from './board'
 
 export default class Game extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            xisNext:true,
-            step: 0,
-            history: [
-                {squares: Array(9).fill(null)}
-            ]
-        }
+    // constructor(props){
+    //     super(props);
+    //     this.state = {
+    //         xisNext:true,
+    //         step: 0,
+    //         history: [
+    //             {squares: Array(9).fill(null)}
+    //         ]
+    //     }
+    // }
+    state = {
+        xisNext:true,
+        step: 0,
+        history: [
+            {squares: Array(9).fill(null)}
+        ]
     }
+
     handleClick(i){
         const history = this.state.history.slice(0,this.state.step+1);
         const current = history[history.length-1];
-        // const squares = current.squares.slice();
         const squares = Array.from(current.squares);
         const winner = Winner(squares);
         if(winner || squares[i]){
             return;
         }
-        // console.log(history,history.length);
-        // console.log(current);
-        // console.log(squares);
-        // console.log(`-------------------------`);
         squares[i] = this.state.xisNext ? 'X' : 'O' ;
         this.setState({
             history: history.concat({
                 squares: squares
             }),
-            // history: {squares: squares},
             xisNext: !this.state.xisNext,
             step: history.length
         })
     }
+
     render() {
         const history = this.state.history;
         const current = history[this.state.step];
         const squares = Array.from(current.squares);
         const winner = Winner(squares);
-        console.log(winner);
-        // console.log(history,history.slice(0,this.state.step+1),history.length,current);
+        const draw = `It's a Draw !!`
         return (
             <div className="game">
                 <div className="game-board">
@@ -49,7 +51,9 @@ export default class Game extends Component {
                     <Board onClick={(i) => {this.handleClick(i)}}
                         squares={current.squares}
                     />
-                    <div className="winner">{winner}</div>
+                    <div className="winner">
+                        { this.state.step === 9 && winner === null ? draw : winner }
+                    </div>
                 </div>  
             </div>
         )
